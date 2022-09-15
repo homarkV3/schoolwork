@@ -42,18 +42,15 @@ function parseArgs(args) {
         switch(args[i]) {
             case '-h':
             case '--help':
-                console.log("help")
                 usage()
                 process.exit()
             case '-p':
             case '--path':
                 assignedPath = args[++i]
-                console.log("path", assignedPath)
                 break
             case '-s':
             case '--sort':
                 sortType = args[++i]
-                console.log("sort", sortType)
                 if (sortType === 'alpha') {
                     sortOrder = compareFileNames
                 }
@@ -67,22 +64,22 @@ function parseArgs(args) {
             case '-t':
             case '--threshold':
                 thresHoldMin = Number(args[++i])
-                console.log("treshhold", thresHoldMin)
                 break
             case '-m':
             case '--metric':
                 metric = true
-                console.log("metric", metric)
                 break
             case '-b':
             case '--blocksize':
                 blocksize = true
-                console.log("blocksize")
                 break
+            default:
+                throw new error("bad flag")
+
         }
     }
     if (args.length < 0){
-        console.log('no args found');
+        throw new error('no args found');
     }
 }
 
@@ -96,7 +93,7 @@ function diskfull(path){
             let filestat = fs.statSync(path+"/"+dirFiles[i])
             switch (blocksize) {
                 case true:
-                    outFileSize = blkfile.default(filestat.size)
+                    outFileSize = blkfile.default(filestat.size, 2, si)
                     break
                 default:
                     outFileSize = filestat.size
@@ -118,7 +115,7 @@ function diskfull(path){
             let filestat = fs.statSync(path+"/"+dirFiles[i])
             switch (blocksize) {
                 case true:
-                    outFileSize = blkfile.default(filestat.size)
+                    outFileSize = blkfile.default(filestat.size, 2, "si")
                     break
                 default:
                     outFileSize = filestat.size
@@ -144,7 +141,15 @@ function diskfull(path){
         print(path, "", dirsize)
     } else {
         files.sort(sortOrder)
-        console.log(JSON.stringify(files).replaceAll(`","` , "\t").replaceAll(`":`, "  ").replaceAll(`},{`, "\n").replaceAll(`name`,"").replaceAll(`[{`,"").replaceAll(`}]`,"").replaceAll(`"`,""))
+        for (let i = 0; i < files.length; i++) {
+            if (outFileSize >= thresHoldMin){
+                if (metric){
+                    console.log(`${files[i].name} \tsize: ${convertfilesize(files[i].size)}`)
+                } else {
+                    console.log(`${files[i].name} \tsize: ${files[i].size}`)
+                }
+            }
+        }
     }
     console.groupEnd()
     return dirsize
