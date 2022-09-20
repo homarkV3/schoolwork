@@ -93,7 +93,7 @@ function diskfull(path){
             let filestat = fs.statSync(path+"/"+dirFiles[i])
             switch (blocksize) {
                 case true:
-                    outFileSize = blkfile.default(filestat.size, 2, si)
+                    outFileSize = blkfile.default(filestat.size, 2, "si")
                     break
                 default:
                     outFileSize = filestat.size
