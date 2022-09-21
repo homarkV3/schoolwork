@@ -115,7 +115,8 @@ function diskfull(path){
             let filestat = fs.statSync(path+"/"+dirFiles[i])
             switch (blocksize) {
                 case true:
-                    outFileSize = blkfile.default(filestat.size, 2, "si")
+                    let extra = filestat.size%4096
+                    outFileSize = filestat.size-extra+4096
                     break
                 default:
                     outFileSize = filestat.size
@@ -124,14 +125,13 @@ function diskfull(path){
             switch(filestat.isDirectory()){
                 case true:
                     outFileSize = diskfull(path+"/"+dirFiles[i])
-                    dirsize += outFileSize
                     file.name = path+"/"+dirFiles[i]
                     file.size = outFileSize
                     break
                 default: 
                     file.name = path+"/"+dirFiles[i]
                     file.size = outFileSize
-                    dirsize += filestat.size
+                    dirsize += outFileSize
                     break
             }
             files.push(file)
