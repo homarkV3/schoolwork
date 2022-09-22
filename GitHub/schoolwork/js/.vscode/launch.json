@@ -13,7 +13,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/project1/index.js",
-            "args": ["-s", "alpha", "-m", "-b"]
+            "args": ["-s", "alpha", "-m", "-b", "-t", 100000]
         }
     ]
 }
