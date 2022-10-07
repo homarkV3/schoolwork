@@ -1,147 +1,175 @@
 #include <iostream>
-#include <vector>
+#include <cstdlib>
+#include <string>
 using namespace std;
-
-// parameter order will always be jersey #s then ratings
-void outputRoster(const vector<int> &, const vector<int> &);
-void addPlayer(vector<int> &, vector<int> &);
-void removePlayer(vector<int> &, vector<int> &);
-void updatePlayerRating(const vector<int> &, vector<int> &);
-void outputPlayersAboveRating(const vector<int> &, const vector<int> &);
-
+// Function prototypes
+char PrintMenu();
+int GetNumOfNonWSCharacters(string);
+int GetNumOfWords(string);
+void ReplaceExclamation(string &);
+void ShortenSpace(string &);
+int FindText(string, string);
+string text, phraseToFind;
+// Main function
 int main()
 {
-    // below two lines declares two vectors
-    vector<int> jerseyNumber; // vector to hold jersey number
-    vector<int> playerRating; // vector to hold player rating
-    int input;
-
-    for (int i = 0; i < 5; i++) // loop iterates five times to take user input of jersey number and players rating
+    // variable decalaration
+    char option;
+    // Reading text from user
+    cout << "Enter a sample text:\n\n";
+    getline(cin, text);
+    // Printing text
+    cout << "You entered: " << text << "\n\n";
+    // Loop till user wants to quit
+    do
     {
-        cout << "Enter player " << i + 1 << "'s jersey number:\n";
-        cin >> input;
-        jerseyNumber.push_back(input);
-        cout << "Enter player " << i + 1 << "'s rating:\n";
-        cin >> input;
-        cout << "\n";
-        playerRating.push_back(input);
-    }
-
-    outputRoster(jerseyNumber, playerRating); // calls function outputRoster to output the roster
-    char choice;
-    while (1) // loop iterates until user enters q to quit
-    {
-        cout << "\nMENU\n";
-        cout << "a - Add player\n";
-        cout << "d - Remove player\n";
-        cout << "u - Update player rating\n";
-        cout << "r - Output players above a rating\n";
-        cout << "o - Output roster\n";
-        cout << "q - Quit\n\nChoose an option:\n";
-        cin >> choice;
-
-        switch (choice) // control jumps over user input and then that corresponding function gets executed
-        {
-        case 'a':
-            addPlayer(jerseyNumber, playerRating); // calls function addPlayer
-            break;
-        case 'd':
-            removePlayer(jerseyNumber, playerRating); // calls function removePlayer
-            break;
-        case 'u':
-            updatePlayerRating(jerseyNumber, playerRating); // calls function updatePlayerRating
-            break;
-        case 'r':
-            outputPlayersAboveRating(jerseyNumber, playerRating); // calls function outputPlayersAboveRating
-            break;
-        case 'o':
-            outputRoster(jerseyNumber, playerRating); // calls function outputRoster
-            break;
-        case 'q':
-            exit(0); // terminates the program
-        default:
-            cout << "Wrong Choice\n";
-        }
-    }
-
+        // Printing menu
+        option = PrintMenu();
+    } while (option != 'Q' && option != 'q');
+    // system("pause");
     return 0;
 }
-
-void outputRoster(const vector<int> &jerseyNumber, const vector<int> &playerRating)
+// Function that prints menu
+char PrintMenu()
 {
-
-    cout << "ROSTER\n";
-    for (int i = 0; i < jerseyNumber.size(); ++i) // loop iterates to print roster
+    char ch;
+    string phraseToFind;
+    // Printing menu
+    cout << "MENU\n";
+    cout << "c - Number of non-whitespace characters\nw - Number of words\nf - Find text\nr - Replace all !'s\ns - Shorten spaces\nq - Quit\n\n";
+    cout << "Choose an option:\n";
+    // Reading user choice
+    cin >> ch;
+    // Calling functions based on option selected by //user
+    switch (ch)
     {
-        cout << "Player " << i + 1 << " -- Jersey number: " << jerseyNumber[i] << ", Rating: " << playerRating[i] << "\n";
+        // User wants to quit
+    case 'q':
+    case 'Q':
+        exit(0);
+        // Counting non-whitespace characters
+    case 'c':
+    case 'C':
+        cout << "Number of non-whitespace characters: " << GetNumOfNonWSCharacters(text) << "\n\n";
+        break;
+        // Counting number of words
+    case 'w':
+    case 'W':
+        cout << "Number of words: " << GetNumOfWords(text) << "\n\n";
+        break;
+        // Counting number of occurrences phrase in //given string
+    case 'f':
+    case 'F':
+        cin.ignore();
+        cout << "Enter a word or phrase to be found: \n";
+        getline(cin, phraseToFind);
+        cout << "\"" << phraseToFind << "\" instances: " << FindText(text, phraseToFind) << "\n\n";
+        break;
+        // Replacing ! with .
+    case 'r':
+    case 'R':
+        ReplaceExclamation(text);
+        cout << "Edited text: " << text << "\n\n";
+        break;
+        // Replacing multiple spaces with single //space
+    case 's':
+    case 'S':
+        ShortenSpace(text);
+        cout << "Edited text: " << text << "\n\n";
+        break;
+    default:
+        cout << "Invalid Choice.... Try Again\n";
+        break;
     }
+    return ch;
 }
-
-void addPlayer(vector<int> &jerseyNumber, vector<int> &playerRating)
+// Function that count number of non space characters
+int GetNumOfNonWSCharacters(const string text)
 {
-
-    int input;
-    cout << "Enter a new player's jersey number:\n"; // prompts user to enter jersey number
-    cin >> input;
-    jerseyNumber.push_back(input);              // adds the jersey number to vector
-    cout << "Enter the player's rating:\n"; // // prompts user to enter rating
-    cin >> input;
-    playerRating.push_back(input); // adds the rating to vector
-}
-
-void removePlayer(vector<int> &jerseyNumber, vector<int> &playerRating)
-{
-
-    int input, j = 0;
-    cout << "Enter a jersey number:\n";
-    cin >> input;
-    for (int i = 0; i < jerseyNumber.size(); ++i)
+    int cnt = 0, i;
+    int len = text.size();
+    // Looping over given text
+    for (i = 0; i < len; i++)
     {
-        if (jerseyNumber[i] != input) // checks if given jersey number matches than skips that jersey number
+        // Counting spaces
+        if (!isspace(text[i]))
+            cnt++;
+    }
+    return cnt;
+}
+// Function that count number of words in the string
+int GetNumOfWords(const string text)
+{
+    int words = 0, i;
+    int len = text.size();
+    // Looping over text
+    for (i = 0; i < len; i++)
+    {
+        // Checking for space
+        if (isspace(text[i]))
         {
-            // below code will not add the user input jersey number to the vector and hence will get removed
-            jerseyNumber[j] = jerseyNumber[i];
-            playerRating[j] = playerRating[i];
-            j++;
+            // Handling multiple spaces
+            while (isspace(text[i]))
+                i++;
+            // Incrementing words
+            i--;
+            words++;
         }
     }
-    jerseyNumber.resize(jerseyNumber.size() - 1); // resizes the vector by removing 1 extra elements
-    playerRating.resize(playerRating.size() - 1); // resizes the vector by removing 1 extra elements
+    // Handling last word
+    words = words + 1;
+    return words;
 }
-
-void updatePlayerRating(const vector<int> &jerseyNumber, vector<int> &playerRating)
+// Function that replaces ! with .
+void ReplaceExclamation(string &text)
 {
-
-    int inputRating, inputJersey;
-    cout << "Enter a jersey number:\n";
-    cin >> inputJersey;
-    cout << "Enter a new rating for player:\n";
-    cin >> inputRating;
-
-    for (int i = 0; i < jerseyNumber.size(); ++i)
+    string newText = text;
+    int i, len = text.size();
+    // Looping over string
+    for (i = 0; i < len; i++)
     {
-        if (jerseyNumber[i] == inputJersey) // checks if user input jersey number matches or not
+        // Replacing ! with .
+        if (text[i] == '!')
+            newText[i] = '.';
+    }
+    text = newText;
+}
+// Function that replaces Multiple spaces with single space
+void ShortenSpace(string &text)
+{
+    int i, len = text.size(), k = 0;
+    string newText = "";
+    // Looping over string
+    for (i = 0; i < len; i++)
+    {
+        // Assign individual characters
+        // Handling multiple spaces
+        if (isspace(text[i]))
         {
-            playerRating[i] = inputRating; // updates the rating
-            break;
+            // Replacing multiple spaces with single //space
+            while (isspace(text[i]))
+                i++;
+            i--;
+            newText += " ";
+        }
+        else
+        {
+            newText += text[i];
         }
     }
+    text = newText;
 }
-
-void outputPlayersAboveRating(const vector<int> &jerseyNumber, const vector<int> &playerRating)
+// Function that counts the occurrences of given phrase in a //given text
+int FindText(string text, string phrase)
 {
-
-    int input;
-    cout << "Enter a rating:\n";
-    cin >> input;
-    cout << "ABOVE " << input << "\n";
-    int j = 1;
-    for (int i = 0; i < jerseyNumber.size(); ++i)
+    int count = 0;
+    if (phrase.size() == 0)
+        return 0;
+    // Counting number of phrase occurrences in the given string
+    for (size_t offset = text.find(phrase); offset != string::npos; offset = text.find(phrase, offset + phrase.size()))
     {
-        if (input < playerRating[i]) // checks if players rating is above user input rating then displays the information
-        {
-            cout << "Player " << j << " -- Jersey number: " << jerseyNumber[i] << ", Rating: " << playerRating[i] << "\n";
-        }
-        j++;
+        ++count;
     }
+    // Retuning count
+    return count;
 }
