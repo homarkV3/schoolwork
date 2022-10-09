@@ -1,10 +1,17 @@
-import chalk from 'chalk'
-import fs from 'fs'
-import filesize from 'filesize'
-import fsPromises from 'fs/promises'
+// import chalk from 'chalk'
+// import fs from 'fs'
+// import filesize from 'filesize'
+// import fsPromises from 'fs/promises'
+// import glob from 'glob'
 //v2
 
 // utility base comparators
+const fs = require("fs")
+const filesize = require("filesize")
+const fsPromises = require("fs/promises")
+const glob = require("glob")
+const chalk = require("chalk")
+
 const noSort = (a, b) => 0
 const compareNumbers = (a, b) => a - b
 const compareStrings = (a, b) => a.localecompare(b)
@@ -17,22 +24,70 @@ function compareFileExtensions(a, b) {
   return compareStrings(extA, extB)
 }
 
-let blocksize = false
+let blockSize = false
 let threshold = 0
 let metric = false
 let path = '.'
 let sortOrder = noSort
+let lang = "en"
+let loc = "US"
+let configFile = "config.json"
+let filter = ""
+const defConfigs = {"blockSize": "false", 
+                    "threshold": 0,
+                    "metric": false,
+                    "path": '.',
+                    "sortOrder": "noSort",
+                    "lang": "en",
+                    "loc": "US",
+                    "configFile": "config.json",
+                    "filter": ""}
+
+let errMessages = {}
 
 async function usage() {
-  const text = await fsPromises.readFile('help.txt', 'utf8')
+  const text = await fsPromises.readFile(`help.${lang}-${loc}.txt`, 'utf8')
   console.log(chalk.yellow(text))
   process.exit()
+}
+
+async function setconfig() {
+  const fileConfigs = await fsPromises.readFile(configFile, 'utf8')
+  for(var fileConfig in fileConfigs){
+    if (defConfigs[fileConfig]) {}
+  } 
+}
+
+async function setLang(){
+  const args = process.argv.slice(2)
+  for (let i = 0; i < args.length; i++) {
+    switch (args[i]) {
+      case '-lang':
+      case '--language':
+        lang = args[++i]
+        break
+      case '-loc':
+      case '--locale':
+        loc = args[++i]
+        break          
+    }
+  }
+  errMessageFile = `messages.${lang}-${loc}.json`
+  errMessages = await fsPromises.readFile(errMessageFile, 'utf8')
 }
 
 function setFlags() {
   const args = process.argv.slice(2)
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
+      case '-c':
+      case '--config':
+        configFile = args[++i]
+        break
+      case '-f':
+      case '--filter':
+        filter = args[++i]
+        break     
       case '-h':
       case '--help':
         usage()
@@ -62,7 +117,7 @@ function setFlags() {
           sortOrder = compareFileSizes
         }
         break
-      default: console.log(chalk.red('bad input'))
+      default: console.log(chalk.red(errMessages[flagErr]))
     }
   }
 }
@@ -81,13 +136,13 @@ async function readTree(dirPath) {
     if (stats.isFile()) {
       const file = {
         name: childName,
-        size: blocksize ? getBlockSize(stats.size) : stats.size
+        size: blockSize ? getBlockSize(stats.size) : stats.size
       }
       dir.size += file.size
       dir.children.push(file)
     }
     else if (stats.isDirectory()) {
-      const subDir = readTree(childName)
+      const subDir = await readTree(childName)
       dir.size += subDir.size
       dir.children.push(subDir)
     }
@@ -112,9 +167,11 @@ function displayTree(dirEntry) {
   console.groupEnd()
 }
 
-function main() {
+async function main() {
+  await setLang()
+  await setconfig()
   setFlags()
-  let tree = readTree(path)
+  let tree = await readTree(path)
   displayTree(tree)
 }
 main()

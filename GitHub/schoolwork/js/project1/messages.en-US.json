@@ -1,0 +1,4 @@
+{
+    "flagErr": "bad flag input",
+    "fileErr": "problem with accessing file"
+}
