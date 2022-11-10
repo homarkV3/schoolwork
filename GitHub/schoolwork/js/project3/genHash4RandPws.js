@@ -43,7 +43,7 @@ async function rnd1kecrypt(){
     hashes =[]
     pwds1k=kPwds()
     for (i=0; i<pwds1k.length; i++){
-        var hash = bcrypt.hashSync(pwds1k[i], 8)
+        var hash = bcrypt.hashSync(pwds1k[i], 4)
         await fs.appendFile("./1K.hashes.txt", hash+"\n", (error) => {
             if (error) {
                 console.log('An error has occurred ', error)
