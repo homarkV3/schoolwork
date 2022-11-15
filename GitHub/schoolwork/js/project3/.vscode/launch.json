@@ -12,7 +12,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\crackPwHashes.js"
+            "program": "${workspaceFolder}\\${file}",
+            "args": ["2", "26"]
         }
     ]
 }
