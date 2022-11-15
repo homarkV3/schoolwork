@@ -75,8 +75,8 @@ function check4Letter(pwd) {
     return false
 }
 
-async function store(message) {
-    fs.appendFile("./1K.hashes.cracked.txt", message+"\n", (error) => {
+function store(message) {
+    fs.appendFileSync("./1K.hashes.cracked.txt", message+"\n", (error) => {
         if (error) {
             console.log('An error has occurred ', error)
             return
@@ -84,11 +84,11 @@ async function store(message) {
     })
 }
 
-async function crackPwd() {
-    setTimeout(function() {
-        process.exit(0)}, 
-    600000)
-    const text = await fsPromises.readFile('./1K.hashes.txt', 'utf8')
+function crackPwd() {
+    // setTimeout(function() {
+    //     process.exit(0)}, 
+    // 600000)
+    const text = fs.readFileSync('./1K.hashes (2).txt', 'utf8')
     pwds = text.split("\n")
     if (cluster.isMaster) {
         const splitQty = pwds.length / numCPUs;
@@ -103,6 +103,7 @@ async function crackPwd() {
         }
     } else { //worker
         process.on('message', ({start, end }) => {
+            // console.log(start,end,pwds)
             for (let i = start; i < end; i++) {
                 let pwd
                 if ((pwd = checkempty(pwds[i]))) {
@@ -119,14 +120,15 @@ async function crackPwd() {
                     continue
                 }
                 uncracked.push(pwds[i])
+                console.log(pwds[i])
                 continue
             }
             for (let i = 0; i < uncracked.length; i++) {
                 if ((pwd = check3Letter(pwds[i]))) {
-                    crackedPwd.push(pwd)
+                    store(pwd)
                     continue
                 } else if ((pwd = check4Letter(pwds[i]))) {
-                    crackedPwd.push(pwd)
+                    store(pwd)
                     continue
                 }
             }

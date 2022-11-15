@@ -12,8 +12,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\${file}",
-            "args": ["2", "26"]
+            "program": "${file}"
         }
     ]
 }
