@@ -97,7 +97,7 @@ function crackPwd() {
             const worker = cluster.fork()
             let msg = {start: Math.floor(i * splitQty), end: Math.floor(i * splitQty + splitQty )}
             worker.send(msg)
-            worker.on('message', text => {
+            worker.on('message', () => {
                 return
             })
         }
