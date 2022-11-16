@@ -3,43 +3,43 @@ const bcrypt = require("bcryptjs")
 const fsPromises = require("fs/promises")
 var pwds10k = require(`./mcupws.json`)
 const fs = require("fs")
-var Letter = "abcdefghijklmnopqrstuvwxyz".split("")
+var letters = "abcdefghijklmnopqrstuvwxyz".split("")
 const cluster = require('cluster')
 const numCPUs = require('os').cpus().length
 let arr =[]
 
 var uncracked = []
 
-function check10K(pwd) {
-    for (let i = 0; i < pwds10k.length; i++) {
-        if (bcrypt.compare(pwds10k[i], pwd)){
-            return pwds10k[i]
+function check10K(hash) {
+    for (let pwd10k of pwds10k) {
+        if (bcrypt.compareSync(pwd10k, hash)){
+            return pwd10k
         }
     }
     return false
 }
 
-function checkempty(pwd) {
-    if (bcrypt.compareSync("", pwd)) {
+function checkempty(hash) {
+    if (bcrypt.compareSync("", hash)) {
         return ""
     }
     return false;
 }
 
-function checkLetter(pwd) {
-    for (let i = 0; i < Letter.length; i++) {
-        if (bcrypt.compareSync(Letter[i], pwd)) {
-            return Letter[i]
+function checkLetter(hash) {
+    for (let letter of letters) {
+        if (bcrypt.compareSync(letter, hash)) {
+            return letter
         }
     }
     return false
 }
 
-function check2Letter(pwd){
-    for (let i = 0; i < Letter.length; i++){
-        for (let j = 0; j < Letter.length; j++){
-            if (bcrypt.compareSync(Letter[i]+Letter[j], pwd)) {
-                return Letter[i]+Letter[j] 
+function check2Letter(hash){
+    for (let letter1 of letters){
+        for (let letter2 of letters){
+            if (bcrypt.compareSync(letter1+letter2, hash)) {
+                return letter1+letter2
             }
         }
     }
@@ -47,12 +47,12 @@ function check2Letter(pwd){
 }
 
 
-function check3Letter(pwd) {
-    for (let i = 0; i < Letter.length; i++) {
-        for (let j = 0; j < Letter.length; j++) {
-            for (let k = 0; k < Letter.length; k++) {
-                if (bcrypt.compareSync(Letter[i] + Letter[j] + Letter[k], pwd)) {
-                    return Letter[i] + Letter[j] + Letter[k]
+function check3Letter(hash) {
+    for (let letter1 of letters) {
+        for (let letter2 of letters) {
+            for (let letter3 of letters) {
+                if (bcrypt.compareSync(letter1 + letter2 + letter3, hash)) {
+                    return letter1 + letter2 + letter3
                 }
             }
         }
@@ -60,13 +60,13 @@ function check3Letter(pwd) {
     return false
 }
 
-function check4Letter(pwd) {
-    for (let i = 0; i < Letter.length; i++) {
-        for (let j = 0; j < Letter.length; j++) {
-            for (let k = 0; k < Letter.length; k++) {
-                for (let l = 0; l < Letter.length; l++) {
-                    if (bcrypt.compareSync(Letter[i] + Letter[j] + Letter[k] + Letter[l], pwd)) {
-                        return Letter[i] + Letter[j] + Letter[k] + Letter[l]
+function check4Letter(hash) {
+    for (let letter1 of letters) {
+        for (let letter2 of letters) {
+            for (let letter3 of letters) {
+                for (let letter4 of letters) {
+                    if (bcrypt.compareSync(letter1 + letter2 + letter3 + letter4, hash)) {
+                        return letter1 + letter2 + letter3 + letter4
                     }
                 }
             }
@@ -75,8 +75,8 @@ function check4Letter(pwd) {
     return false
 }
 
-function store(message) {
-    fs.appendFileSync("./1K.hashes.cracked.txt", message+"\n", (error) => {
+function store(pwd) {
+    fs.appendFileSync("./1K.hashes.cracked.txt", pwd+"\n", (error) => {
         if (error) {
             console.log('An error has occurred ', error)
             return
@@ -89,9 +89,9 @@ function crackPwd() {
     //     process.exit(0)}, 
     // 600000)
     const text = fs.readFileSync('./1K.hashes (2).txt', 'utf8')
-    pwds = text.split("\n")
+    let hashes = text.split("\n")
     if (cluster.isMaster) {
-        const splitQty = pwds.length / numCPUs;
+        const splitQty = hashes.length / numCPUs;
 
         for (let i = 0; i < numCPUs; i++) {
             const worker = cluster.fork()
@@ -106,28 +106,27 @@ function crackPwd() {
             // console.log(start,end,pwds)
             for (let i = start; i < end; i++) {
                 let pwd
-                if ((pwd = checkempty(pwds[i]))) {
+                if ((pwd = checkempty(hashes[i]))) {
                     store(pwd)
                     continue
-                } else if ((pwd = checkLetter(pwds[i]))) {
+                } else if ((pwd = checkLetter(hashes[i]))) {
                     store(pwd)
                     continue
-                } else if ((pwd = check2Letter(pwds[i]))) {
+                } else if ((pwd = check2Letter(hashes[i]))) {
                     store(pwd)
                     continue
-                } else if ((pwd = check10K(pwds[i]))) {
+                } else if ((pwd = check10K(hashes[i]))) {
                     store(pwd)
                     continue
                 }
-                uncracked.push(pwds[i])
-                console.log(pwds[i])
+                uncracked.push(hashes[i])
                 continue
             }
-            for (let i = 0; i < uncracked.length; i++) {
-                if ((pwd = check3Letter(pwds[i]))) {
+            for (let hash of uncracked) {
+                if ((pwd = check3Letter(hash))) {
                     store(pwd)
                     continue
-                } else if ((pwd = check4Letter(pwds[i]))) {
+                } else if ((pwd = check4Letter(hash))) {
                     store(pwd)
                     continue
                 }

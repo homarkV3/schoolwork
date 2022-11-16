@@ -13,27 +13,27 @@ function rndLetter(){
 }
 function kPwds(){
     kpwds = []
-    for (var index = 0; index < 700; index++) {
-        var pwd = rndPwd(pwds)
-        kpwds.push(pwd[1])
+    for (let i = 0; i < 700; i++) {
+        pwd = rndPwd(pwds)
+        kpwds.push(pwd)
     }
-    for (var index = 0; index < 200; index++) {
+    for (let i = 0; i < 200; i++) {
         pwd = ""
         kpwds.push(pwd)
     }
-    for (var index = 0; index < 40; index++) {
+    for (let i = 0; i < 40; i++) {
         pwd = rndLetter()
         kpwds.push(pwd)
     }
-    for (var index = 0; index < 30; index++) {
+    for (let i = 0; i < 30; i++) {
         pwd = rndLetter()+rndLetter()
         kpwds.push(pwd)
     }
-    for (var index = 0; index < 20; index++) {
+    for (let i = 0; i < 20; i++) {
         pwd = rndLetter()+rndLetter()+rndLetter()
         kpwds.push(pwd)
     }
-    for (var index = 0; index < 10; index++) {
+    for (let i = 0; i < 10; i++) {
         pwd = rndLetter()+rndLetter()+rndLetter()+rndLetter()
         kpwds.push(pwd)
     }
@@ -42,7 +42,7 @@ function kPwds(){
 async function rnd1kecrypt(){
     hashes =[]
     pwds1k=kPwds()
-    for (i=0; i<pwds1k.length; i++){
+    for (let i=0; i<pwds1k.length; i++){
         var hash = bcrypt.hashSync(pwds1k[i], 4)
         await fs.appendFile("./1K.hashes.txt", hash+"\n", (error) => {
             if (error) {
