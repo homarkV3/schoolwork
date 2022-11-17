@@ -5,6 +5,7 @@ var pwds10k = require(`./mcupws.json`)
 const fs = require("fs")
 var letters = "abcdefghijklmnopqrstuvwxyz".split("")
 const cluster = require('cluster')
+const { Console } = require("console")
 const numCPUs = require('os').cpus().length
 let arr =[]
 
@@ -89,7 +90,7 @@ function crackPwd() {
     //     process.exit(0)}, 
     // 600000)
     const text = fs.readFileSync('./1K.hashes (2).txt', 'utf8')
-    let hashes = text.split("\n")
+    let hashes = text.split("\r\n")
     if (cluster.isMaster) {
         const splitQty = hashes.length / numCPUs;
 
@@ -103,31 +104,29 @@ function crackPwd() {
         }
     } else { //worker
         process.on('message', ({start, end }) => {
-            // console.log(start,end,pwds)
             for (let i = start; i < end; i++) {
-                let pwd
-                if ((pwd = checkempty(hashes[i]))) {
-                    store(pwd)
+                if ((pwdempty = checkempty(hashes[i]))) {
+                    store(pwdempty)
                     continue
-                } else if ((pwd = checkLetter(hashes[i]))) {
-                    store(pwd)
+                } else if ((pwd1 = checkLetter(hashes[i]))) {
+                    store(pwd1)
                     continue
-                } else if ((pwd = check2Letter(hashes[i]))) {
-                    store(pwd)
+                } else if ((pwd2 = check2Letter(hashes[i]))) {
+                    store(pwd2)
                     continue
-                } else if ((pwd = check10K(hashes[i]))) {
-                    store(pwd)
+                } else if ((pwd10k = check10K(hashes[i]))) {
+                    store(pwd10k)
                     continue
                 }
                 uncracked.push(hashes[i])
                 continue
             }
             for (let hash of uncracked) {
-                if ((pwd = check3Letter(hash))) {
-                    store(pwd)
+                if ((pwd3 = check3Letter(hash))) {
+                    store(pwd3)
                     continue
-                } else if ((pwd = check4Letter(hash))) {
-                    store(pwd)
+                } else if ((pwd4 = check4Letter(hash))) {
+                    store(pwd4)
                     continue
                 }
             }
