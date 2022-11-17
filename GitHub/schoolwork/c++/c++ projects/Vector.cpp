@@ -26,7 +26,7 @@ Vector& Vector::operator=(const Vector& v)
         capacity = v.size();
         n_elems = v.size();
         data_ptr = new int[capacity];
-        for (int i = 0; i < this->size(); i++){
+        for (int i = 0; i < v.size(); i++){
             data_ptr[i]= v.at(i);
         }
     }
@@ -113,6 +113,9 @@ void Vector::insert(size_t pos, int item)
 } // Shuffle items right to make room for a new element
 void Vector::clear()
 {
+    capacity = CHUNK;
+    delete [] data_ptr;
+    data_ptr = new int[capacity];
     n_elems = 0;
 } // n_elems = 0 (nothing else to do; keep the current capacity)
 
