@@ -150,7 +150,7 @@ class Payment {
     friend class Order;
 public:
     Payment() = default;
-    // virtual ~Payment() = default;
+    virtual ~Payment() = default;
     virtual string print_detail() const = 0;
 };
 
