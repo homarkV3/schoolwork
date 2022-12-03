@@ -7,16 +7,16 @@ Vector::Vector()
 {
     capacity = CHUNK;
     n_elems = 0;
-    data_ptr = new int[capacity];
+    dpointer = new int[capacity];
 }
 
 Vector::Vector(const Vector &v)
 {
     capacity = v.size();
     n_elems = v.size();
-    data_ptr = new int[capacity];
+    dpointer = new int[capacity];
     for (int i = 0; i < v.size(); i++){
-       data_ptr[i]= v.at(i);
+       dpointer[i]= v.at(i);
     }
 }
 
@@ -33,7 +33,7 @@ Vector& Vector::operator=(const Vector& v)
 
 Vector::~Vector()
 { 
-    delete [] data_ptr;
+    delete [] dpointer;
 }
 
 void Vector::grow()
@@ -41,10 +41,10 @@ void Vector::grow()
     if (capacity <= n_elems) {
         int *temp = new int[int(capacity*1.6)];
         for (int i = 0; i < n_elems; i++){
-            temp[i] = data_ptr[i];
+            temp[i] = dpointer[i];
         }
-        delete [] data_ptr;
-        data_ptr = temp;
+        delete [] dpointer;
+        dpointer = temp;
     }
 }
 
@@ -61,7 +61,7 @@ int Vector::back() const
 int Vector::at(size_t pos) const
 {   
     if (pos <= n_elems && n_elems != 0){
-        return data_ptr[pos];
+        return dpointer[pos];
     }
     throw range_error("OUT OF RANGE");
 } // Return element in position "pos" (0-based)
@@ -79,13 +79,13 @@ bool Vector::empty() const
 // Mutators
 int &Vector::operator[](size_t pos)
 {    
-    return data_ptr[pos];
+    return dpointer[pos];
 } // Same as at but no bounds checking
 void Vector::push_back(int item)
 {
     n_elems++;
     grow();
-    data_ptr[n_elems-1] = item;
+    dpointer[n_elems-1] = item;
 } // Append a new element at the end of the array
 void Vector::pop_back()
 {
@@ -97,7 +97,7 @@ void Vector::erase(size_t pos)
     at(pos);
     --n_elems;
     for (int i = pos;n_elems > i; i++){
-        data_ptr[i] = data_ptr[i+1];
+        dpointer[i] = dpointer[i+1];
     }
 } // Remove item in position pos and shuffles following items left
 void Vector::insert(size_t pos, int item)
@@ -105,9 +105,9 @@ void Vector::insert(size_t pos, int item)
     ++n_elems;
     grow();
     for (int i = pos;n_elems > i; i++){
-        data_ptr[i+1] = data_ptr[i];
+        dpointer[i+1] = dpointer[i];
     }
-    data_ptr[pos] = item;
+    dpointer[pos] = item;
 } // Shuffle items right to make room for a new element
 void Vector::clear()
 {
@@ -120,14 +120,14 @@ int *Vector::begin()
     if (n_elems == 0){
         return nullptr;
     }
-    return &data_ptr[0];
+    return &dpointer[0];
 } // Return a pointer to 1st element, or nullptr if n_elems == 0
 int *Vector::end()
 {
     if (n_elems == 0){
         return nullptr;
     }
-    return &data_ptr[n_elems];
+    return &dpointer[n_elems];
 } // Return a pointer to 1 past last element, or nullptr if n_elems == 0
 
 // Comparators
