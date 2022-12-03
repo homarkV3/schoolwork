@@ -1,0 +1,8 @@
+# ninja log v5
+0	662	6917907780775578	CMakeProject1/CMakeFiles/CMakeProject1.dir/CMakeProject1.cpp.obj	8be63639d4ccb25d
+664	880	6917907782885572	CMakeProject1/CMakeProject1.exe	ff4e54f9969d1c80
+0	589	6917912436086793	CMakeProject1/CMakeFiles/project5.dir/groceries.cpp.obj	6bed5cce5e8a9de
+589	844	6917912438576696	CMakeProject1/project5.exe	848e66f3cbd58d82
+1	7	0	clean	9992afb1f91dc381
+0	722	6917913094279089	CMakeProject1/CMakeFiles/project5.dir/groceries.cpp.obj	6bed5cce5e8a9de
+723	841	6917913095269086	CMakeProject1/project5.exe	848e66f3cbd58d82
