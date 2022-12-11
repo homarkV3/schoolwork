@@ -9,7 +9,7 @@
 #include<random>
 using namespace std;
 
-int main() {
+int main(char** argv) {
   // file read
     vector<string> words;
     ifstream file("words.txt");
@@ -23,7 +23,7 @@ int main() {
     uniform_int_distribution<int> di(0, NWORDS); 
     const int n  = di(dre);
     // key_word = words[n];
-    key_word = "sodiums";
+    key_word = argv[-1];
 
     const auto lengthcompare = [](const string& word1, const string& word2){
         if (word1.length() < word2.length()) {
