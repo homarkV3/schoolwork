@@ -1,0 +1,19 @@
+!help (displays a helpful summary of commands)
+
+!hello (responds with world)
+
+!lorem (produces lorem ipsum words)
+
+!virus (gives number of current cases in Utah County)
+
+!dadjoke (tells a random dad joke) or !chuck (tells a random Chuck Norris joke)
+
+!die (kills your bot)
+
+!text (sends a text message to someone's phone)
+
+!email (sends email)
+
+!music (streams music remotely)
+
+!weather (gives weather blurb 

@@ -4,7 +4,7 @@ const fsPromises = require("fs/promises")
 var pwds10k = require(`./mcupws.json`)
 const fs = require("fs")
 var letters = "abcdefghijklmnopqrstuvwxyz".split("")
-const cluster = require('cluster')
+const threads = require('worker_threads')
 const { Console } = require("console")
 const numCPUs = require('os').cpus().length
 let arr =[]
@@ -91,19 +91,19 @@ function crackPwd() {
     // 600000)
     const text = fs.readFileSync('./1K.hashes (2).txt', 'utf8')
     let hashes = text.split("\r\n")
-    if (cluster.isMaster) {
+    if (threads.isMaster) {
         const splitQty = hashes.length / numCPUs;
 
         for (let i = 0; i < numCPUs; i++) {
-            const worker = cluster.fork()
+            const worker = new threads.Worker()
             let msg = {start: Math.floor(i * splitQty), end: Math.floor(i * splitQty + splitQty )}
-            worker.send(msg)
+            worker.postMessage(msg)
             worker.on('message', () => {
                 return
             })
         }
     } else { //worker
-        process.on('message', ({start, end }) => {
+        parentPort.on('message', ({start, end }) => {
             for (let i = start; i < end; i++) {
                 if ((pwdempty = checkempty(hashes[i]))) {
                     store(pwdempty)
