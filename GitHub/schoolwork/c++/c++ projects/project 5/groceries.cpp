@@ -146,10 +146,10 @@ public:
 // Payment code /
 /////////////////
 class Payment {
-    double amount = 0.0;
+    double amount;
     friend class Order;
 public:
-    Payment() = default;
+    Payment();
     // virtual ~Payment() = default;
     virtual string print_detail() const = 0;
 };
