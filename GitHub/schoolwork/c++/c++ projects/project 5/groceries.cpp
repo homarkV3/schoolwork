@@ -149,8 +149,8 @@ class Payment {
     double amount;
     friend class Order;
 public:
-    Payment();
-    // virtual ~Payment() = default;
+    Payment() = default;
+    virtual ~Payment() = default;
     virtual string print_detail() const = 0;
 };
 
