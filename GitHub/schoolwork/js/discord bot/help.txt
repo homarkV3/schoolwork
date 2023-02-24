@@ -1,19 +1,29 @@
-!help (displays a helpful summary of commands)
+!help 
+(displays a helpful summary of commands)
 
-!hello (responds with world)
+!hello 
+(responds with world)
 
-!lorem (produces lorem ipsum words)
+!lorem [number]
+(produces lorem ipsum words. can take numbers and will default to 10)
 
-!virus (gives number of current cases in Utah County)
+!virus 
+(gives number of current cases in Utah County)
 
-!dadjoke (tells a random dad joke) or !chuck (tells a random Chuck Norris joke)
+!dadjoke 
+(tells a random dad joke) 
 
-!die (kills your bot)
+!chuck 
+(tells a random Chuck Norris joke)
 
-!text (sends a text message to someone's phone)
+!die 
+(kills your bot)
 
-!email (sends email)
+!email [emailaddress to] [subject] [content]
+(this will need to have a app password set up with the email. to prove that it works, this is defaulted to my email)
 
-!music (streams music remotely)
+!spotify [music name]
+(this will open spotify to play that music)
 
-!weather (gives weather blurb 
+!play [music name]
+(streams music remotely)
