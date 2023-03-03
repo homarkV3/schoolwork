@@ -1,33 +1,33 @@
 import math
 import sys
 def main(xl,xu,func): 
-    flag = 0 
+    notflag = 0 
     ite = 0 
     if func(xl) == 0:
         root = xl 
-        return xl, flag, ite
+        return xl, notflag, ite
     if func(xu) == 0:
         root = xl 
-        return xl, flag, ite
+        return xl, notflag, ite
     if func(xl)*func(xu)>0: 
-        flag = -1
-        return flag
+        notflag = -1
+        return notflag
     root = (func(xu)*xl-func(xl)*xu)/(func(xu)-func(xl))
     while abs(root) > sys.float_info.epsilon: 
         valv = func(root)
         if ite >= 100000:
-            return root, flag, valv, ite
+            return root, notflag, valv, ite
         ite += 1
         if func(root)*func(xl)>0: 
             if math.ulp(root) > (root - xl):
-                return root, flag, valv, ite 
+                return root, notflag, valv, ite 
             xl = root 
         else: 
             if math.ulp(root) > (xu - root):
-                return root, flag, valv, ite 
+                return root, notflag, valv, ite 
             xu = root 
         root = (func(xu)*xl-func(xl)*xu)/(func(xu)-func(xl))
-    return root, flag, valv, ite
+    return root, notflag, valv, ite
 
 def f1(x):
     return x**4-6*x**3+12*x**2-10*x+3
