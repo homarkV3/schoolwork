@@ -37,7 +37,6 @@ void DisplayFatalErr(char *errMsg); // writes error message before abnormal term
 
 void main(int argc, char *argv[])   // argc is # of strings following command, argv[] is array of ptrs to the strings
 {
-	printf("hello");
 	// Declare ALL variables and structures for main() HERE, NOT INLINE (including the following...)
 	WSADATA wsaData;                // contains details about WinSock DLL implementation
 	struct sockaddr_in6 serverInfo = { 0 };	// standard IPv6 structure that holds server socket info
