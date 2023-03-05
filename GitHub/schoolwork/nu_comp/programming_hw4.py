@@ -18,7 +18,7 @@ def main(xl,xu,func):
         if ite >= 100000:
             return root, notflag, valv, ite
         ite += 1
-        if func(root)*func(xl)>0: 
+        if func(root)*func(xl)>0:  
             if math.ulp(root) > (root - xl):
                 return root, notflag, valv, ite 
             xl = root 
