@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-WSEchoClientv6",
+      "appliesTo": "prog1jdk/WSEchoClientv6.c",
+      "type": "launch"
+    }
+  ]
+}

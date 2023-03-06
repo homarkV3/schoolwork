@@ -1,2 +1,14 @@
 ﻿  ConsoleApplication1.cpp
-  ConsoleApplication1.vcxproj -> C:\Users\Hoyoungs PC\Documents\GitHub\schoolwork\GitHub\schoolwork\Visual studio test\ConsoleApplication1\Debug\ConsoleApplication1.exe
+C:\Users\Hoyoungs PC\Documents\GitHub\schoolwork\GitHub\schoolwork\Visual studio test\ConsoleApplication1\ConsoleApplication1.cpp(78,25): warning C4101: 'serverinfo': unreferenced local variable
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__closesocket@4 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__connect@12 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__htons@4 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__recv@16 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__send@16 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__setsockopt@20 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__socket@12 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__WSAStartup@8 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__WSACleanup@0 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol __imp__inet_pton@12 referenced in function _main
+ConsoleApplication1.obj : error LNK2019: unresolved external symbol _DisplayFatalErr referenced in function _main
+C:\Users\Hoyoungs PC\Documents\GitHub\schoolwork\GitHub\schoolwork\Visual studio test\ConsoleApplication1\Debug\ConsoleApplication1.exe : fatal error LNK1120: 11 unresolved externals
