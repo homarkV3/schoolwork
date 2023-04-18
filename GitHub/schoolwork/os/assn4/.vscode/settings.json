@@ -3,5 +3,6 @@
         "producer.h": "c",
         "consumer.h": "c",
         "main.h": "c"
-    }
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
