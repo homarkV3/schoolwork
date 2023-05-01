@@ -82,8 +82,8 @@ std::vector<Process> shortest_job_first(std::vector<Process> processes) {
 
 std::vector<Process> shortest_remaining_time_first(std::vector<Process> processes) {
     std::sort(processes.begin(), processes.end(), compare_arrival_time);
-    std::priority_queue<Process, std::vector<Process>, decltype(compare_remaining_time)*> pq(compare_remaining_time);
     std::vector<Process> completed_processes;
+    std::priority_queue<Process, std::vector<Process>, decltype(&compare_remaining_time)> pq(compare_remaining_time);
     int current_time = 0, i = 0;
 
     while (!processes.empty() || !pq.empty()) {
@@ -96,18 +96,16 @@ std::vector<Process> shortest_remaining_time_first(std::vector<Process> processe
         if (!pq.empty()) {
             auto process = pq.top();
             pq.pop();
-            if (process.response_time == -1) {
-                process.response_time = current_time - process.start_time;
-            }
+            process.response_time = current_time - process.start_time;
+            current_time++;
             process.remaining_time--;
             if (process.remaining_time == 0) {
-                process.turnaround_time = current_time - process.start_time + 1;
+                process.turnaround_time = current_time - process.start_time;
                 process.wait_time = process.turnaround_time - process.duration;
                 completed_processes.push_back(process);
             } else {
                 pq.push(process);
             }
-            current_time++;
         } else {
             current_time++;
         }
