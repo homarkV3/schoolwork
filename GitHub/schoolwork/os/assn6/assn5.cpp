@@ -103,6 +103,8 @@ std::vector<Process> shortest_remaining_time_first(std::vector<Process> processe
                 process.turnaround_time = current_time - process.start_time;
                 process.wait_time = process.turnaround_time - process.duration;
                 completed_processes.push_back(process);
+                processes.erase(processes.begin(), processes.begin() + i);
+                i = 0;
             } else {
                 pq.push(process);
             }
@@ -113,7 +115,6 @@ std::vector<Process> shortest_remaining_time_first(std::vector<Process> processe
 
     return completed_processes;
 }
-
 std::vector<Process> round_robin(std::vector<Process> processes, int time_quantum) {
     std::sort(processes.begin(), processes.end(), compare_arrival_time);
     std::queue<Process> q;
