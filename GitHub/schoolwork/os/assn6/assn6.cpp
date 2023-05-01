@@ -2,7 +2,7 @@
 #include <queue>
 #include <algorithm>
 #include <iomanip>
-#include <iostream> using namespace std;
+#include <iostream>
 
 struct Process {
     int id, start_time, duration, remaining_time, wait_time, response_time, turnaround_time;
@@ -20,7 +20,7 @@ bool compare_remaining_time(const Process& a, const Process& b) {
     return a.remaining_time < b.remaining_time;
 }
 
-void calculate_avg_times(const vector<Process>& processes, double& avg_response_time, double& avg_turnaround_time, double& avg_wait_time) {
+void calculate_avg_times(const std::vector<Process>& processes, double& avg_response_time, double& avg_turnaround_time, double& avg_wait_time) {
     int n = processes.size();
     double total_response_time = 0, total_turnaround_time = 0, total_wait_time = 0;
 
