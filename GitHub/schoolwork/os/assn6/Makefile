@@ -1,2 +1,2 @@
 all:
-	g++ assn5.cpp -o assn5
+	g++ -std=c++11 -o assn5 assn5.cpp
