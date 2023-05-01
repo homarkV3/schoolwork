@@ -1,8 +1,8 @@
+#include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
 #include <iomanip>
-#include <iostream>
 
 struct Process {
     int id, start_time, duration, remaining_time, wait_time, response_time, turnaround_time;
@@ -90,7 +90,7 @@ std::vector<Process> shortest_remaining_time_first(std::vector<Process> processe
         while (i < processes.size() && processes[i].start_time <= current_time) {
             processes[i].remaining_time = processes[i].duration;
             pq.push(processes[i]);
-            processes.erase(processes.begin() + i);
+            i++;
         }
 
         if (!pq.empty()) {
@@ -175,10 +175,10 @@ int main() {
     calculate_avg_times(rr_result, rr_resp, rr_ta, rr_wait);
 
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << "First Come, First Served\nAvg. Resp.:" << fcfs_resp << ", Avg. T.A.:" << fcfs_ta << ", Avg. Wait:" << fcfs_wait << '\n';
-    std::cout << "Shortest Job First\nAvg. Resp.:" << sjf_resp << ", Avg. T.A.:" << sjf_ta << ", Avg. Wait:" << sjf_wait << '\n';
-    std::cout << "Shortest Remaining Time First\nAvg. Resp.:" << srtf_resp << ", Avg. T.A.:" << srtf_ta << ", Avg. Wait:" << srtf_wait << '\n';
-    std::cout << "Round Robin with Time Quantum of 100\nAvg. Resp.:" << rr_resp << ", Avg. T.A.:" << rr_ta << ", Avg. Wait:" << rr_wait << '\n';
+    std::cout << "First Come, First Served\nAvg. Resp.:" << fcfs_resp << ", Avg. T.A.:" << fcfs_ta << ", Avg. Wait:" << fcfs_wait << std::endl;
+    std::cout << "Shortest Job First\nAvg. Resp.:" << sjf_resp << ", Avg. T.A.:" << sjf_ta << ", Avg. Wait:" << sjf_wait << std::endl;
+    std::cout << "Shortest Remaining Time First\nAvg. Resp.:" << srtf_resp << ", Avg. T.A.:" << srtf_ta << ", Avg. Wait:" << srtf_wait << std::endl;
+    std::cout << "Round Robin with Time Quantum of 100\nAvg. Resp.:" << rr_resp << ", Avg. T.A.:" << rr_ta << ", Avg. Wait:" << rr_wait << std::endl;
 
     return 0;
 }
