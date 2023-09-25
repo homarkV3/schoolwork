@@ -1,0 +1,3 @@
+customerId,CustomerName,CustomerBillingAddress,CustomerMailingAddress,CustomerOrder,CustomerOrder2,productTypeId,productTypeDesc,productTypeId2,productTypeDesc2,productName,productName2
+1,"John Doe","1234 S Memory Lane. Anytown, UT 84001","27 W Jones Ave. Anytown, UT 84001","Purchased Socket Wrench","Purchased Hiking Boots",1,Tools,2,"Hiking Gear","Socket Wrench","Hiking Boots"
+2,"Jane Smith","77 N Fremont Dr. Anytown, UT 84001","9 E Washington Blvd. Anytown, UT 84001","Purchased Computer","Purchased shoes",3,Computers,4,"Athletic Shoes","Apple MacBook Pro 13 in","Nike running shoe"
