@@ -1,0 +1,41 @@
+Inputs that match section 13 in the specification PDF should result in the outputs shown in that same section.
+pass
+
+Test with a line missing the five-digit number when reading from 'phones.txt' (The system should handle and report an error for missing numeric input).
+fail
+
+The command menu should be printed after a valid name or number is entered.
+pass
+
+When phones.txt file has a phone number of 4 digits, program should report an error and gracefully quit? (not specified in spec) (below boundary).
+Pass
+
+Inputs that match section 12 in the specification PDF should result in the outputs shown in that same section.
+pass
+
+Call command should prompt for another name or phone number.
+pass
+
+Inputs that match section 16 in the specification PDF should result in the outputs shown in that same section.
+pass
+
+The offhook, conference, and transfer commands should not work when the current phone is offhook.
+pass
+
+When user inputs an invalid name or number, program should notify user that name or number can't be found, and prompt them to try again.
+pass
+
+When phones.txt a name of 13 characters, program should report an error and gracefully quit? (not specified in spec) (beyond boundary).
+pass
+
+Test with a line containing a non-numeric value instead of a five-digit number when reading from 'phones.txt' (The system should handle and report an error for non-numeric input).
+pass
+
+Program should prompt for another name or phone number after the first one is selected.
+pass
+
+The offhook, call, conference, and transfer commands should not work when the current phone is calling another phone.
+pass
+
+When phones.txt a name of 12 characters, program should perform normally (boundary).
+pass

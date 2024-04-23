@@ -1,0 +1,34 @@
+Program should run on the latest version of Python with the "tabulate" library installed.
+Program should attempt to read from a file called "phones.txt" that is placed in the current directory.
+Program should successfully read from "phones.txt" if all lines have 5-digit numbers followed by a space and up to 12 alphanumeric characters.
+Program should accept up to 20 lines in "phones.txt".
+Program should display a tabulated list of all phone states at startup, except for if phones.txt is not formatted correctly.
+Program should prompt user to choose a phone at startup.
+Phone inputs should allow either a name or phone number.
+Program should prompt for another name or phone number after the first one is selected.
+Call command should prompt for another name or phone number.
+Offhook command should place the current phone in an offhook status.
+Onhook command should place the current phone in an onhook status.
+Transfer command should transfer a call.
+Conference command should allow a third person to join an ongoing call between two people.
+Phone status command should list the status of all phones in the system.
+Switch phone command should allow changing the current phone.
+Program should accept phone numbers that begin with 0.
+Every phone's initial state should be onhook.
+A success message should be printed after a valid name or number is entered.
+The command menu should be printed after a valid name or number is entered.
+A message telling the user to try again should be printed if invalid input is given.
+Any command should be performed on the current phone.
+Inputs that match section 11 in the specification PDF should result in the outputs shown in that same section.
+Inputs that match section 12 in the specification PDF should result in the outputs shown in that same section.
+Inputs that match section 13 in the specification PDF should result in the outputs shown in that same section.
+Inputs that match section 14 in the specification PDF should result in the outputs shown in that same section.
+Inputs that match section 15 in the specification PDF should result in the outputs shown in that same section.
+Inputs that match section 16 in the specification PDF should result in the outputs shown in that same section.
+The onhook, call, conference, and transfer commands should not work when the current phone is onhook.
+The offhook, conference, and transfer commands should not work when the current phone is offhook.
+The offhook and call commands should not work when the current phone is in a call.
+The onhook, call, conference, and transfer commands should not work when the current phone is ringing.
+The offhook, call, conference, and transfer commands should not work when the current phone is calling another phone.
+When the onhook command is used on the current phone and the phone is in a state that accepts the command, a message should print that the phone hears silence.
+If the current phone is in a 3-way conference and tries to conference or transfer another phone, a message should print that the phone should hear denial.

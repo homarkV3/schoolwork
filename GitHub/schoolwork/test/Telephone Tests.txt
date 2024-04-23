@@ -1,0 +1,25 @@
+Functional Testing
+The program should successfully start when main.py is executed in an IDE or from the command line.
+The program should fail to start if phones.txt is missing or renamed.
+The program should correctly load the phone names and numbers from the phones.txt file.
+The program should not run if phone numbers in phones.txt are not 5-digit values.
+The program should reject phone names in phones.txt that exceed 12 characters or contain spaces.
+The program should correctly handle a phones.txt file with fewer or exactly 20 phone number-name pairs.
+The Call command should successfully initiate calls to other phones in the system.
+The Offhook and Onhook commands should correctly change the status of a phone.
+The Transfer command should correctly perform cold transferring calls.
+The Conference command should allow adding up to two additional parties to a call, not exceeding three participants in total.
+The Phone Status’ command should accurately display the status of all phones.
+The Switch Phone feature should allow changing the active phone without issues.
+The Quit command should exit the program smoothly.
+
+User Interface Testing
+The console should display a tabulated list of phones with their names, numbers, and statuses at startup.
+The user should be prompted to choose a phone upon starting the program.
+The console should correctly prompt for input and respond to user inputs as expected.
+
+Error Handling and Validation Testing
+The program should respond with an error message if the phones.txt file is incorrectly formatted.
+The program should handle input errors, like invalid phone numbers or names, without crashing.
+The program should not run if there are trailing newline characters in the phones.txt file.
+The system should prevent conference calls with more than three people.

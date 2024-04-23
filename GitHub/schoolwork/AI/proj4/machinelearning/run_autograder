@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Set up autograder files
+
+cp /autograder/submission/*.py /autograder/source/
+
+cd /autograder/source
+
+python3.9 autograder.py --no-graphics --gradescope-output
+mv /autograder/source/gradescope_response.json /autograder/results/results.json
